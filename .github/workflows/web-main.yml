@@ -43,5 +43,5 @@ jobs:
         uses: actions/upload-artifact@v4.3.0
         if: always() #always() # success() , failure(), canceled()
         with:
-          name: cucumber reports
+          name: web test reports
           path: reports/cucumber-web-report.html  # Path to test reports
