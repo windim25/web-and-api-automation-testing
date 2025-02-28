@@ -1,58 +1,55 @@
 name: Web Automation Workflow
 
-#Triger / Kapan Actionnya jalan
+#Triger / Kapan Action-nya jalan
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
+
 permissions:
   contents: read
   pages: write
   id-token: write
 
 jobs:
-  automation:
-    runs-on: ubuntu-latest #windows-latest, macos-latest, ubuntu-18.04,
+  automation-JUnit:
+    runs-on: ubuntu-latest  # windows-latest, macos-latest, ubuntu-18.04,
 
     steps:
-    # download repo
-    - uses: actions/checkout@v4 # Checkout the repositori
+      - uses: actions/checkout@v3  # Checkout the repository
 
-    # setup java
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4.0.0
-      with:
-        java-version: '21' #ganti dengan versi Java lain seperti '18', '7', '11'
-        distribution: 'temurin' # Alternatif: 'adoptopenjdk', 'zulu'
-        
-    # install browser
-    - name: Setup Chrome with extra capabilities
-      uses: browser-actions/setup-chrome@v0.0.0
-      with:
-          chrome-version: latest # Ganti dengan stable untuk versi stabil
-          chrome-options: '--headless' # (Jika ingin menjalankan dalam mode headless'
-          
-    - name: Build with Gradle
-      run: |
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '21'  # Ganti dengan versi Java lain seperti '8', '17'
+          distribution: 'temurin'  # Alternatif: 'adoptopenjdk', 'zulu'
+
+      - name: Setup Chrome with extra capabilities
+        uses: browser-actions/setup-chrome@v1.4.0
+        with:
+          chrome-version: latest # Ganti dengan 'stable' untuk versi stabil
+          #chrome-options: '--headless' #(Jika ingin menjalankan Chrome dalam mode headless)
+
+      - name: Build with Gradle
+        run: |
           chmod +x gradlew  # Make gradlew executable
-          ./gradlew build   # Run the build task before tests 
+          ./gradlew build   # Run the build task before tests
 
-    - name: Run Tests
-      run: ./gradlew clean test # Run tests after the build step
+      - name: Run Tests
+        run: ./gradlew clean test  # Run tests after the build step
 
-    - name: Archive test results
-      uses: actions/upload-artifact@v4.3.0
-      if: always() # success() , failure(), canceled()
-      with:
-        name: cucumber reports
-        path: target/cucumber-reports.html # Path to test reports
+      - name: Archive test results
+        uses: actions/upload-artifact@v4.3.0
+        if: always() #always() # success() , failure(), canceled()
+        with:
+          name: cucumber reports
+          path: target/index.html  # Path to test reports
 
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v4.0.0
-      with:
-         personal_token: ${{ secrets.PAT }}
-         publish_dir: target
+       # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4.0.0
+        with:
+          personal_token: ${{ secrets.PAT }}
+          publish_dir: target
