@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 jobs:
-  automation-JUnit:
+  automation:
     runs-on: ubuntu-latest  # windows-latest, macos-latest, ubuntu-18.04,
 
     steps:
@@ -45,11 +45,3 @@ jobs:
         with:
           name: cucumber reports
           path: target/index.html  # Path to test reports
-
-       # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4.0.0
-        with:
-          personal_token: ${{ secrets.PAT }}
-          publish_dir: target
