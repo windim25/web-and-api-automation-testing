@@ -18,5 +18,5 @@ https://dummyapi.io/docs/user (Get User by ID, Create User, Update User, Delete 
 https://dummyapi.io/docs/tag (Get List of Tags)
 
 Dalam project ini memakai https://www.saucedemo.com/ sebagai pembuatan test scenario automation web
-dan https://gorest.co.in/ sebagai automation API test,  https://gorest.co.in/public/v2/users
+dan https://gorest.co.in/ sebagai automation API test,  https://gorest.co.in/public/v2/users,
 karena mengalami kendala saat menggunakan https://www.demoblaze.com/ dan https://dummyapi.io/docs/user
