@@ -43,5 +43,5 @@ jobs:
         uses: actions/upload-artifact@v4.3.0
         if: always() #always() # success() , failure(), canceled()
         with:
-          name: cucumber reports
+          name: api test reports
           path: reports/cucumber-api-report.html  # Path to test reports
